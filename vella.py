@@ -17,7 +17,7 @@ def get_titles_urls(driver):
     article_urls = []
 
     try:
-        # Récupérer la pagec web pour la catégorie donnée
+        # Récupérer la page web pour la catégorie donnée
         driver.get("https://www.marrakechbestof.com/categorie-bon-plan/hebergements/")
         # Attendre que les éléments se chargent
         articles = WebDriverWait(driver, 40).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "section.list.listing a")))
@@ -96,11 +96,11 @@ def get_article_info(url, driver):
         
         article_info = {
             "titre": title,
-            "nombre_chambre" :nombre_chambre,
-            "nombre_Equipements_enfants " : nombre_Equipements_enfants ,
-            "nombr_Equipements_spéciaux" :nombr_Equipements_spéciaux,
-            "prix_par_nuit"  : prix_par_nuit,
-            "Temps_jusqu_au_centreville_minute" : Temps_jusqu_au_centreville_minute,
+            "nombre_chambre": nombre_chambre,
+            "nombre_Equipements_enfants": nombre_Equipements_enfants,
+            "nombr_Equipements_spéciaux": nombr_Equipements_spéciaux,
+            "prix_par_nuit": prix_par_nuit,
+            "Temps_jusqu_au_centreville_minute": Temps_jusqu_au_centreville_minute,
         }
         
         return article_info
@@ -110,7 +110,13 @@ def get_article_info(url, driver):
         return None
 
 def main():
-    driver = webdriver.Firefox()  # Vous pouvez changer pour le driver de votre choix (Firefox, Edge, etc.)
+    # Spécifiez le chemin absolu vers geckodriver
+    geckodriver_path = "/usr/bin/geckodriver"
+    
+    # Configuration du pilote Firefox avec le chemin spécifié
+    options = webdriver.FirefoxOptions()
+    options.add_argument('--headless')
+    driver = webdriver.Firefox(executable_path=geckodriver_path, options=options)
     try:
         article_urls = get_titles_urls(driver)
         vella_list = []
@@ -138,5 +144,5 @@ def main():
     finally:
         driver.quit()
 
-if __name__ == "__main__":
+if _name_ == "_main_":
     main()
